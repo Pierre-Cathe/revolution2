@@ -61,6 +61,8 @@ const SongGuesser = () => {
   const [guess, setGuess] = useState('');
   const [result, setResult] = useState('');
   const [score, setScore] = useState(0);
+  const [guessesWithExtraSeconds, setGuessesWithExtraSeconds] = useState(0);
+  const [didUseExtraSeconds, setDidUseExtraSeconds] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
@@ -661,6 +663,7 @@ const SongGuesser = () => {
   // Function to play one more second without guessing
   const playOneMoreSecond = () => {
     setClipDuration(prevDuration => prevDuration + 1);
+    setDidUseExtraSeconds(true);
     playSongClip();
   };
 
@@ -678,6 +681,10 @@ const SongGuesser = () => {
     if (normalizedGuess === normalizedSongName) {
       setResult('Correct! Well done!');
       setScore(score + 1);
+      if (didUseExtraSeconds) {
+        setGuessesWithExtraSeconds(guessesWithExtraSeconds + 1);
+      }
+      setDidUseExtraSeconds(false);
       setShowAnswer(true);
       playFullSong(); // Play full song on correct guess
     } else {
@@ -846,12 +853,12 @@ const SongGuesser = () => {
   return (
     <div className={`song-guesser ${isPlaying ? 'playing' : ''}`}>
       <div className="app-header">
-        <h1>Revolution 1</h1>
+        <h1>Revolution <span style="color:blue; font-size:3.2rem; font-weight: 900;">2</span></h1>
         <p>Practice and test your knowledge of the Beatles core discography using the first second of a randomly selected song</p>
         
         <div className="game-controls">
           <div className="score-display">
-            Score: {score}
+            Score: {score - guessesWithExtraSeconds} found in 1 second and {guessesWithExtraSeconds} found with extra seconds out of a total {playedSongs.length}.
           </div>
           
           <div className="mode-toggle">
@@ -1060,13 +1067,7 @@ const SongGuesser = () => {
       )}
       
       <div className="footer">
-        <p>Revolution 1, a 1-second Beatles song identification game, was developed by Ara Kharazian</p>
-        <div className="footer-links">
-          <a href="https://arakharazian.com" target="_blank" rel="noopener noreferrer">Personal Website</a> | 
-          <a href="https://twitter.com/arakharazian" target="_blank" rel="noopener noreferrer">Twitter / X</a> | 
-          <a href="https://linkedin.com/in/arakharazian" target="_blank" rel="noopener noreferrer">LinkedIn</a> | 
-          <a href="https://substack.com/@arakharazian" target="_blank" rel="noopener noreferrer">Substack</a>
-        </div>
+        <p>Revolution 1, a 1-second Beatles song identification game, was developed by Ara Kharazian. Pierre just tweaked the score display.</p>
       </div>
     </div>
   );
