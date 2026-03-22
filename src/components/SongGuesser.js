@@ -853,14 +853,13 @@ const SongGuesser = () => {
   return (
     <div className={`song-guesser ${isPlaying ? 'playing' : ''}`}>
       <div className="app-header">
-        <h1>Revolution <span style="color:blue; font-size:3.2rem; font-weight: 900;">2</span></h1>
+        <h1>Revolution <span style={{'color':'blue', 'font-size':'3.2rem', 'font-weight': '900'}}>2</span></h1>
         <p>Practice and test your knowledge of the Beatles core discography using the first second of a randomly selected song</p>
         
         <div className="game-controls">
           <div className="score-display">
             Score: {score - guessesWithExtraSeconds} found in 1 second and {guessesWithExtraSeconds} found with extra seconds out of a total {playedSongs.length}.
-          </div>
-          
+          </div>          
           <div className="mode-toggle">
             <label className="toggle-switch">
               <input 
