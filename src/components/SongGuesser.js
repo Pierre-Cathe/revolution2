@@ -690,6 +690,7 @@ const SongGuesser = () => {
     } else {
       setResult(`Sorry, that's incorrect. Try again with an extra second of the song!`);
       setAttemptsCount(prevCount => prevCount + 1);
+      setDidUseExtraSeconds(true);
       setClipDuration(prevDuration => prevDuration + 1); // Add one more second
     }
     
